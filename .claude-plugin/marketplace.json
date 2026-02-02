@@ -1,0 +1,13 @@
+{
+  "name": "kapitan-marketplace",
+  "owner": {
+    "name": "AISG"
+  },
+  "plugins": [
+    {
+      "name": "kapitan-claude-plugin",
+      "source": "./kapitan-claude-plugin",
+      "description": "A comprehensive Claude Code plugin with commands, agents, skills, hooks, and MCP servers"
+    }
+  ]
+}
