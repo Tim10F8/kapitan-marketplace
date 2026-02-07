@@ -7,6 +7,173 @@ description: This skill should be used when the user asks to "write a blog post"
 
 Produce publication-ready technical blog posts as Markdown files. The default platform is a Gundersen-style Jekyll blog with KaTeX math, jekyll-scholar citations, and custom HTML figures. For other platforms (Hugo, Astro, Next.js), consult `references/seo-frontmatter.md` for platform-specific frontmatter and conventions.
 
+## Core Philosophy: Collaborative Blog Writing
+
+**Blog writing is collaborative, but Claude should be proactive in delivering drafts.**
+
+The typical workflow starts with a topic, a codebase, a paper, or a vague idea. Claude's role is to:
+
+1. **Understand the source material** by exploring repos, papers, or notes
+2. **Deliver a complete first draft** when confident about the angle
+3. **Search for citations** using web search and APIs to support claims
+4. **Refine through feedback cycles** when the author provides input
+5. **Ask for clarification** only when genuinely uncertain about key decisions
+
+**Key Principle**: Be proactive. If the topic and angle are clear, deliver a full draft. Don't block waiting for feedback on every section — authors are busy. Produce something concrete they can react to, then iterate based on their response.
+
+---
+
+### Balancing Proactivity and Collaboration
+
+**Default: Be proactive. Deliver drafts, then iterate.**
+
+| Confidence Level | Action |
+|-----------------|--------|
+| **High** (clear topic, obvious angle) | Write full draft, deliver, iterate on feedback |
+| **Medium** (some ambiguity) | Write draft with flagged uncertainties, continue |
+| **Low** (major unknowns) | Ask 1-2 targeted questions, then draft |
+
+**Draft first, ask with the draft** (not before):
+
+| Section | Draft Autonomously | Flag With Draft |
+|---------|-------------------|-----------------|
+| Outline | Yes | "Framed as deep dive — adjust if you prefer tutorial" |
+| Opening | Yes | "Emphasized problem X — correct if wrong angle" |
+| Body sections | Yes | "Included sections A, B, C — reorder if needed" |
+| Code examples | Yes | "Used Python — switch to R/Julia if preferred" |
+| Citations | Yes | "Cited papers X, Y, Z — add any I missed" |
+
+**Only block for input when:**
+- Target audience is unclear (experts vs. beginners changes everything)
+- Topic is too broad to pick a single angle
+- Platform is unclear (Jekyll vs. Hugo vs. other)
+- Explicit request to review before continuing
+
+---
+
+## CRITICAL: Never Hallucinate Citations
+
+**This is the most important rule in blog writing with AI assistance.**
+
+### The Problem
+AI-generated citations have a **~40% error rate**. Hallucinated references — papers that don't exist, wrong authors, incorrect years, fabricated DOIs — are a serious credibility problem. Blog posts persist indefinitely with no retraction process, and readers propagate errors by citing your post in their own work.
+
+### The Rule
+**NEVER generate BibTeX entries from memory. ALWAYS fetch programmatically.**
+
+| Action | Correct | Wrong |
+|--------|---------|-------|
+| Adding a citation | Search API → verify → fetch BibTeX | Write BibTeX from memory |
+| Uncertain about a paper | Mark as `PLACEHOLDER` | Guess the reference |
+| Can't find exact paper | Note: "placeholder — verify" | Invent similar-sounding paper |
+
+### When You Can't Verify a Citation
+
+Use an explicit placeholder pattern so the author knows to check:
+
+```liquid
+{% cite PLACEHOLDER_author2024_verify %}
+<!-- TODO: Could not verify this citation exists. Please confirm before publishing. -->
+```
+
+**Always tell the author**: "I've marked [X] citations as placeholders that need verification. I could not confirm these references exist."
+
+For the complete citation verification workflow, see `references/citation-workflow.md`.
+
+---
+
+## Workflow 0: Starting from Source Material
+
+When the user provides a codebase, paper, library, or project as source material, start here before the Core Workflow.
+
+```
+Source Material Workflow:
+- [ ] Step 1: Explore the source material
+- [ ] Step 2: Identify the blog angle
+- [ ] Step 3: Confirm angle and audience with user
+- [ ] Step 4: Find citations in source material
+- [ ] Step 5: Search for additional references
+- [ ] Step 6: Proceed to Core Workflow Step 2 (outline)
+```
+
+### Step 1: Explore the Source Material
+
+Understand what you're working with:
+
+```bash
+# For a codebase
+ls -la
+find . -name "*.py" -o -name "*.rs" -o -name "*.ts" | head -20
+find . -name "README*" -o -name "*.md" | head -10
+
+# For a paper or PDF
+# Read the abstract, introduction, and conclusion first
+
+# For a library
+# Read the README, check examples/, look at core API
+```
+
+Look for:
+- `README.md` — Project overview and key claims
+- `examples/`, `notebooks/` — Demonstrations of the concept
+- `tests/` — Edge cases and expected behavior
+- Existing `.bib` files or citation references
+- Any draft documents or notes
+
+### Step 2: Identify the Blog Angle
+
+Ask: "What would Gundersen write about this?" The best Gundersen-style posts:
+- Take **one concept** and explain it thoroughly
+- Derive from first principles, not just describe
+- Connect theory to code
+- Assume an intelligent reader who wants to understand, not just use
+
+Candidate angles:
+- **The derivation** — "Deriving X from scratch" (deep dive)
+- **The intuition** — "What X really means" (explainer)
+- **The implementation** — "Building X step by step" (tutorial)
+- **The connection** — "How X relates to Y" (deep dive)
+
+### Step 3: Confirm Angle and Audience
+
+Present your proposed framing:
+
+> "Based on the source material, I propose writing a [deep dive/explainer/tutorial] on [specific angle]. The target reader would be [audience level]. The key takeaway: [one sentence]. Should I proceed with this framing?"
+
+**Then proceed with the draft.** Don't wait for confirmation unless the angle is genuinely ambiguous.
+
+### Step 4: Find Citations in Source Material
+
+Check for papers already referenced:
+
+```bash
+# Find existing citations in codebase
+grep -r "arxiv\|doi\|cite\|reference" --include="*.md" --include="*.bib" --include="*.py" --include="*.rs"
+find . -name "*.bib"
+```
+
+These are high-signal starting points — the author has already deemed them relevant.
+
+### Step 5: Search for Additional References
+
+Use Exa MCP (if available) or web search to find supporting references:
+
+```
+Search queries to try:
+- "[main concept] tutorial" or "[main concept] explained"
+- "[concept] original paper"
+- "[concept] textbook reference"
+- Author names from existing citations
+```
+
+Then verify and retrieve BibTeX using the workflow in `references/citation-workflow.md`.
+
+### Step 6: Skip to Core Workflow Step 2
+
+With the angle confirmed and citations gathered, skip Step 1 (Clarify Scope) and proceed directly to **Step 2: Research and Outline** in the Core Workflow below.
+
+---
+
 ## Core Workflow
 
 Follow this sequence for every blog post:
@@ -175,9 +342,31 @@ For the default Jekyll blog using jekyll-scholar:
 - Cite inline with `{% cite key %}` — renders as (Author, Year)
 - Store references in `_bibliography/references.bib`
 - Add bibliography at the post's end with `{% bibliography --cited %}`
-- Cite sources when making claims about prior work, theoretical results, or experimental findings
+- Use consistent citation keys: `author_year_firstword` (e.g., `vaswani_2017_attention`)
 
-For setup details, see `references/jekyll-setup.md`.
+**When to cite:**
+- Claims about prior work, theoretical results, or experimental findings
+- Definitions or theorems attributed to specific sources
+- Datasets, benchmarks, or tools you reference
+- When saying "it has been shown that..." — cite the source or rephrase
+
+**Verification requirement:** Every citation must be verified programmatically. Never write BibTeX from memory.
+
+Condensed verification workflow:
+1. **Search** — Use Exa MCP or Semantic Scholar to find the paper
+2. **Verify** — Confirm it exists in 2+ sources (Semantic Scholar + CrossRef/arXiv)
+3. **Retrieve** — Get BibTeX via DOI content negotiation
+4. **Validate** — Confirm the specific claim appears in the source
+5. **Add** — Append verified entry to `_bibliography/references.bib`
+
+If any step fails, use the placeholder pattern:
+
+```liquid
+{% cite PLACEHOLDER_author2024_verify %}
+<!-- TODO: Could not verify — author must confirm before publishing -->
+```
+
+For the complete workflow with Python code and API details, see `references/citation-workflow.md`. For Jekyll setup, see `references/jekyll-setup.md`.
 
 ### Step 6: Review and Polish
 
@@ -222,6 +411,92 @@ When writing about ML, statistics, finance, or math:
 - **Cite sources** — Use `{% cite key %}` for jekyll-scholar, or link to papers and textbooks
 - **Be precise about assumptions** — State when results require specific conditions (i.i.d., stationarity, etc.)
 
+## Writing Philosophy: The Gundersen Approach
+
+This skill synthesizes writing philosophy from researchers and writers who excel at clear technical exposition:
+
+| Source | Key Contribution to This Skill |
+|--------|-------------------------------|
+| **Gregory Gundersen** | Primary exemplar. Subtitle format, "naming things" technique, purpose statements, explicit closure, intuition-first derivations, cross-referencing |
+| **Gopen & Swan** | 7 principles of reader expectations — topic/stress positions, old-before-new, subject-verb proximity |
+| **Andrej Karpathy** | Single contribution focus, clear framing, connecting theory to practice |
+| **Zachary Lipton** | Word choice, eliminating hedging, cutting intensifiers |
+
+### Distinctive Gundersen Conventions (With Attribution)
+
+- **Subtitle as summary** — One sentence starting with "I" + action verb. Captures the entire post's purpose. *Source: Consistent pattern across Gundersen's posts.*
+- **"First, let's name things."** — Introduce all notation in one place before using it, connected to intuition built earlier. *Source: Gundersen's derivation posts.*
+- **Purpose statement** — "The goal of this post is to..." in the opening paragraph. *Source: Gundersen's consistent opening structure.*
+- **Explicit closure** — "And that's it! That's the [concept]." after complex explanations. *Source: Gundersen's deep dives.*
+- **Intuition before formalism** — At least 20-30% intuition-building before any formal content. *Source: Gundersen + Karpathy's teaching philosophy.*
+- **Cross-reference own posts** — "If you're unfamiliar with X, see my post on [topic]." *Source: Gundersen's blog interconnections.*
+- **Anti-condescension** — Never "obviously" or "trivially." Always "We can see that..." or "Recall that..." *Source: Lipton's word choice heuristics, adapted for blogs.*
+
+For exemplar posts demonstrating each convention, see `references/sources.md`. For detailed writing patterns, see `references/writing-patterns.md`. For the scoring rubric, see `references/style-rubric.md`.
+
+---
+
+## What Blog Readers Actually Read
+
+Understanding reader behavior helps prioritize effort:
+
+| Content Element | % Readers Who See It | Implication |
+|----------------|---------------------|-------------|
+| **Title** | 100% | Must be specific and compelling |
+| **Opening paragraph** | 80-90% | Front-load purpose and hook |
+| **Table of contents** | 70-80% (if present) | Readers scan for sections they care about |
+| **Figures and diagrams** | 60-70% | Examined before surrounding text |
+| **Code examples** | 50-60% (technical readers) | Readers copy-paste and test |
+| **Math/derivations** | 30-50% | Only engaged readers follow derivations |
+| **Conclusion** | 40-60% | Many skip to the end after scanning |
+
+### Time Allocation
+
+Spend approximately **equal time** on each of:
+1. **Title + subtitle + opening paragraph** — This is where most readers decide to keep reading or leave
+2. **Figures + code examples** — These are what readers actually engage with
+3. **Everything else** — Body text, derivations, transitions, conclusion
+
+**If your title and opening don't hook the reader, your brilliant derivation in Section 3 will never be read.**
+
+---
+
+## Common Issues and Solutions
+
+**Issue: Generic opening**
+- *Symptom*: First sentence could apply to any post on the topic ("X has become increasingly popular...")
+- *Fix*: Delete the first sentence. Start with the purpose: "The goal of this post is to..."
+
+**Issue: No clear purpose**
+- *Symptom*: Reader finishes and thinks "what was the point?"
+- *Fix*: Add an explicit purpose statement in the opening paragraph and ensure the conclusion connects back to it
+
+**Issue: Too much math too early**
+- *Symptom*: Equations appear before the reader understands why they matter
+- *Fix*: Apply the 20-30% intuition rule. Explain what an equation "does" before showing it. Use the "naming things" technique.
+
+**Issue: Code examples don't run**
+- *Symptom*: Reader copy-pastes code and gets ImportError or NameError
+- *Fix*: Include all imports at the top. Test-run the example yourself. Add version notes if library APIs change frequently.
+
+**Issue: Unverified citations**
+- *Symptom*: BibTeX entries written from memory, plausible but possibly fabricated
+- *Fix*: Follow `references/citation-workflow.md`. Search → Verify → Retrieve → Validate → Add. Mark anything unverified as `PLACEHOLDER`.
+
+**Issue: Post covers too much ground**
+- *Symptom*: 4000+ words, reader loses the thread, no single takeaway
+- *Fix*: Split into a series. Each post should have exactly one key takeaway. Link between posts with cross-references.
+
+**Issue: No signposting**
+- *Symptom*: Reader loses track of where they are in the argument
+- *Fix*: Add purpose statements at section starts ("In this section, we show..."), progress markers ("Now that we have X, we can..."), and previews ("Next, we'll see how..."). See `references/writing-patterns.md`.
+
+**Issue: Wrong subtitle format**
+- *Symptom*: Subtitle is a fragment, a question, or doesn't start with "I"
+- *Fix*: Rewrite to: "I [verb] [topic] [using/by/from] [method/approach]." One sentence, period at the end.
+
+---
+
 ## Additional Resources
 
 ### Reference Files
@@ -233,3 +508,5 @@ For detailed guidance beyond this core workflow:
 - **`references/diagrams.md`** — HTML figure convention (Jekyll default). Mermaid diagram syntax for common patterns. When to use diagrams vs. prose. Figure design rules and caption conventions.
 - **`references/jekyll-setup.md`** — Jekyll configuration reference. Plugins (jekyll-katex, jekyll-scholar), CSS design conventions, file organization, design philosophy.
 - **`references/style-rubric.md`** — Draft evaluation rubric with 10-criteria scoring. Quick reference templates for openings, transitions, conclusions, and subtitles.
+- **`references/citation-workflow.md`** — Citation verification workflow for blogs. API-based 5-step verification, Python implementation, BibTeX entry formats, hallucination prevention rules, jekyll-scholar troubleshooting.
+- **`references/sources.md`** — Source bibliography with Gundersen exemplar posts. Writing advice sources, tools and APIs, Jekyll ecosystem references.
