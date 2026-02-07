@@ -9,8 +9,7 @@
     {
       "name": "kapitan-claude-plugin",
       "source": "./kapitan-claude-plugin",
-      "description": "Commands, agents, skills, hooks, and MCP servers for enhanced development workflows",
-      "version": "1.2.0"
+      "description": "Commands, agents, skills, hooks, and MCP servers for enhanced development workflows"
     }
   ]
 }
