@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **kapitan-marketplace** is a Claude Code plugin marketplace that provides slash commands, agents, skills, hooks, and MCP server configurations. It's installed via the Claude Code marketplace system (`/plugin marketplace add` + `/plugin install`) and all components are auto-discovered at runtime.
 
-- **Version:** 1.2.2
+- **Version:** 1.2.3
 - **Author:** Luqman Nurhakim
 - **No build system** — all components are Markdown/JSON files auto-discovered by Claude Code. No compilation, bundling, or package management needed for the plugin itself.
 
