@@ -10,26 +10,26 @@ Gundersen's blog ([gregorygundersen.com](https://gregorygundersen.com)) is the p
 
 ### Deep Dives (Thorough Exploration of One Concept)
 
-| Post | URL | What It Exemplifies |
-|------|-----|---------------------|
-| **Deriving the Evidence Lower Bound** | [Link](https://gregorygundersen.com/blog/2021/04/16/variational-inference/) | Step-by-step derivation, "naming things" technique, equation numbering with `\tag{}` |
-| **The Multivariate Gaussian** | [Link](https://gregorygundersen.com/blog/2020/12/12/group-theory/) | Progressive complexity, intuition-first approach, cross-referencing own posts |
-| **Why the Evidence Lower Bound** | [Link](https://gregorygundersen.com/blog/2021/04/16/variational-inference/) | Motivating "why" before "how", connecting formalism to intuition |
-| **Exponential Family Distributions** | [Link](https://gregorygundersen.com/blog/2019/11/28/exponential-family/) | Systematic notation introduction, worked examples with concrete numbers |
+| Post | URL | Sub-Style | What It Exemplifies |
+|------|-----|-----------|---------------------|
+| **Deriving the Evidence Lower Bound** | [Link](https://gregorygundersen.com/blog/2021/04/16/variational-inference/) | First-Principles Narrative | Step-by-step derivation, "naming things" technique, equation numbering with `\tag{}` |
+| **The Multivariate Gaussian** | [Link](https://gregorygundersen.com/blog/2020/12/12/group-theory/) | Comprehensive Treatment | Progressive complexity, intuition-first approach, cross-referencing own posts |
+| **Why the Evidence Lower Bound** | [Link](https://gregorygundersen.com/blog/2021/04/16/variational-inference/) | First-Principles Narrative | Motivating "why" before "how", connecting formalism to intuition |
+| **Exponential Family Distributions** | [Link](https://gregorygundersen.com/blog/2019/11/28/exponential-family/) | Cataloging Explainer | Systematic notation introduction, worked examples with concrete numbers |
 
 ### Explainers (Making Complex Topics Accessible)
 
-| Post | URL | What It Exemplifies |
-|------|-----|---------------------|
-| **The Reparameterization Trick** | [Link](https://gregorygundersen.com/blog/2018/04/29/reparameterization/) | Clear problem statement, visual intuition, code reinforcing theory |
-| **Jensen's Inequality** | [Link](https://gregorygundersen.com/blog/2019/01/15/jensens-inequality/) | Short, focused scope, one concept done thoroughly |
-| **Gaussian Processes** | [Link](https://gregorygundersen.com/blog/2019/09/12/gaussian-processes/) | Building from simple to complex, multiple figures, explicit closure |
+| Post | URL | Sub-Style | What It Exemplifies |
+|------|-----|-----------|---------------------|
+| **The Reparameterization Trick** | [Link](https://gregorygundersen.com/blog/2018/04/29/reparameterization/) | Interpretive Reframer | Clear problem statement, visual intuition, code reinforcing theory |
+| **Jensen's Inequality** | [Link](https://gregorygundersen.com/blog/2019/01/15/jensens-inequality/) | Interpretive Reframer | Short, focused scope, one concept done thoroughly |
+| **Gaussian Processes** | [Link](https://gregorygundersen.com/blog/2019/09/12/gaussian-processes/) | Comprehensive Treatment | Building from simple to complex, multiple figures, explicit closure |
 
 ### Tutorials (Step-by-Step Building)
 
-| Post | URL | What It Exemplifies |
-|------|-----|---------------------|
-| **Linear Regression** | [Link](https://gregorygundersen.com/blog/2020/02/03/linear-regression/) | Concrete → abstract → concrete cycle, runnable code, derivation + implementation |
+| Post | URL | Sub-Style | What It Exemplifies |
+|------|-----|-----------|---------------------|
+| **Linear Regression** | [Link](https://gregorygundersen.com/blog/2020/02/03/linear-regression/) | Comprehensive Treatment | Concrete → abstract → concrete cycle, runnable code, derivation + implementation |
 
 ### Distinctive Conventions (Across All Posts)
 

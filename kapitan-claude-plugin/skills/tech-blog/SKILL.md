@@ -432,6 +432,19 @@ This skill synthesizes writing philosophy from researchers and writers who excel
 - **Cross-reference own posts** — "If you're unfamiliar with X, see my post on [topic]." *Source: Gundersen's blog interconnections.*
 - **Anti-condescension** — Never "obviously" or "trivially." Always "We can see that..." or "Recall that..." *Source: Lipton's word choice heuristics, adapted for blogs.*
 
+### Fine-Grained Style Selection
+
+The baseline conventions above apply to all Gundersen-style posts. For more precise style matching, select one of four sub-styles based on the reader's goal:
+
+| Sub-Style | Reader Goal | Typical Topics |
+|-----------|-------------|----------------|
+| **Cataloging Explainer** | Understand a general pattern and see instances | Distribution families, model classes, property sheets |
+| **Interpretive Reframer** | See a familiar concept from a new angle | Loss function motivations, dual characterizations |
+| **First-Principles Narrative** | Understand *why* something works | Algorithm design choices, "why" questions |
+| **Comprehensive Treatment** | Get a complete multi-perspective reference | Foundational models (OLS, PCA), canonical decompositions |
+
+For detailed system instructions, structural templates, few-shot excerpts, and anti-patterns for each sub-style, see `references/gundersen-style-cards.md`.
+
 For exemplar posts demonstrating each convention, see `references/sources.md`. For detailed writing patterns, see `references/writing-patterns.md`. For the scoring rubric, see `references/style-rubric.md`.
 
 ---
@@ -509,4 +522,5 @@ For detailed guidance beyond this core workflow:
 - **`references/jekyll-setup.md`** — Jekyll configuration reference. Plugins (jekyll-katex, jekyll-scholar), CSS design conventions, file organization, design philosophy.
 - **`references/style-rubric.md`** — Draft evaluation rubric with 10-criteria scoring. Quick reference templates for openings, transitions, conclusions, and subtitles.
 - **`references/citation-workflow.md`** — Citation verification workflow for blogs. API-based 5-step verification, Python implementation, BibTeX entry formats, hallucination prevention rules, jekyll-scholar troubleshooting.
+- **`references/gundersen-style-cards.md`** — Four sub-style reference cards (Cataloging Explainer, Interpretive Reframer, First-Principles Narrative, Comprehensive Treatment). Selection heuristics, structural templates, few-shot examples, and anti-patterns for fine-grained Gundersen style guidance.
 - **`references/sources.md`** — Source bibliography with Gundersen exemplar posts. Writing advice sources, tools and APIs, Jekyll ecosystem references.

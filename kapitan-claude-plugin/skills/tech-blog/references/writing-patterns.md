@@ -146,6 +146,17 @@ Never use "obviously", "trivially", "simple algebra shows", "the reader should k
 
 Link to your own previous posts when relevant: "If you're unfamiliar with X, see my post on [topic]." Provide enough inline context that the post stands alone.
 
+### Fine-Grained Sub-Styles
+
+The conventions above define the baseline Gundersen style. For more precise style matching, four sub-styles codify distinct patterns observed across his blog:
+
+- **Cataloging Explainer** — General form + specific instances/properties (e.g., exponential family distributions)
+- **Interpretive Reframer** — Lesser-known interpretations of familiar concepts (e.g., variance as optimization)
+- **First-Principles Narrative** — "Why" questions about algorithms and techniques (e.g., why backprop goes backward)
+- **Comprehensive Treatment** — Exhaustive multi-perspective coverage of foundational topics (e.g., linear regression, PCA)
+
+Select based on the reader's goal. For detailed system instructions, structural templates, few-shot excerpts, and anti-patterns for each sub-style, see `references/gundersen-style-cards.md`.
+
 ---
 
 ## Deep Dive Pattern
