@@ -56,11 +56,28 @@ See `references/ats-keywords.md` for extraction strategies and ATS mechanics.
 
 ### Step 3: Professional Summary
 
-Generate a role-specific professional summary to place at the top of the resume:
+Generate a role-specific professional summary to place at the top of the resume. This section is **optional** — omit it if space is tight and the resume already speaks for itself.
 
 1. **Headline**: Write a role-specific headline (<10 words) to use as the `\section{}` title. Do NOT use generic titles like "Professional Summary" — use a descriptive noun phrase (e.g., "ML Engineer & Quantitative Researcher").
 2. **Summary paragraph**: Write a <50-word summary starting with a job role noun. Use action words and active voice. Highlight the candidate's top 3-5 selling points that match the JD.
 3. **LaTeX**: Add a `\section{<headline>}` with a single paragraph before the Education section.
+
+**Recommendations:**
+
+- **Summarize your background**: Mention years of experience, title, and specialized skills. This is especially useful when relevant experience is only part of total working experience, or the candidate took career breaks.
+- **Tailor to the role**: Align the summary to the target JD, using the same keywords where relevant.
+- **Explain unconventional situations**: Career changers, bootcampers going technical, experienced managers returning to IC work, or domain switches — use the summary to convey context that no other resume section can capture.
+
+**Common Mistakes:**
+
+- **Don't state your objective** — unless you're in an unconventional situation, the objective is obvious from the role you're applying to.
+- **Don't claim to "specialize" in too many things** — a summary like *"Software Engineer with over a decade of experience, specializing in cloud-based technologies, full stack development, machine learning, big data processing, and data visualization"* covers ~80% of the software industry and dilutes the meaning of "specialization." Even if true, it's hard to justify on a one-page resume. Tailor the specialization to the specific JD instead.
+
+**Examples of good summaries:**
+
+> Computer Science undergraduate student passionate about full stack development with substantial hands-on experience in Ruby on Rails. Keen problem solver with an ability to learn quickly and apply previous experience and novel, creative solutions to solve problems.
+
+> Front End Engineer with six years of experience working in small and large teams to develop interactive, user-friendly, and feature-rich web applications. A self-motivated and lifelong learner familiar with modern web development and web3 technologies (blockchain, crypto, DeFi).
 
 ### Step 4: Section Ordering
 
