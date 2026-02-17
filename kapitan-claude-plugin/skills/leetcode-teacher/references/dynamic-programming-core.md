@@ -100,6 +100,8 @@ def fib(n):
 
 **For 2D DP:** If `dp[i][j]` only depends on `dp[i-1][...]`, use a single 1D array and update it carefully (usually right-to-left for 0-1 knapsack, left-to-right for complete knapsack).
 
+> **Tip:** Sometimes you do not need to store the entire DP table. If `dp[i]` only depends on `dp[i-1]` and `dp[i-2]`, two variables suffice. If `dp[i][j]` only depends on the previous row, a single 1D array suffices. Always check which previous states your transition actually needs before allocating the full table.
+
 *Socratic prompt: "Look at your state transition. Which previous states does dp[i] actually need? Can you keep only those?"*
 
 ### Common DP Pitfalls
@@ -815,6 +817,32 @@ def floyd_warshall(n, edges):
 
 ---
 
+## Practice Questions
+
+### Essential
+
+| Problem | DP Family | Key Concept |
+|---------|-----------|-------------|
+| Climbing Stairs (70) | Framework | Base case + Fibonacci-style transition |
+| Coin Change (322) | Knapsack (Complete) | Minimize coins, complete knapsack pattern |
+| Longest Increasing Subsequence (300) | Subsequence | `dp[i]` = LIS ending at i, O(n log n) optimization |
+| House Robber (198) | House Robber | No-two-adjacent recurrence |
+
+### Recommended
+
+| Problem | DP Family | Key Concept |
+|---------|-----------|-------------|
+| Jump Game (55) | Grid/Greedy | Can reach end? Track farthest reachable index |
+| Unique Paths (62) | Grid | 2D grid path counting |
+| Decode Ways (91) | Subsequence | String segmentation with 1-2 digit chunks |
+| House Robber II (213) | House Robber | Circular variant: two linear passes |
+| Combination Sum IV (377) | Knapsack (Complete) | Count permutations (order matters) |
+| Word Break (139) | Subsequence | Boolean segmentation DP |
+| Longest Common Subsequence (1143) | Subsequence | Two-sequence `dp[i][j]` |
+| Partition Equal Subset Sum (416) | Knapsack (0-1) | Reframe as subset sum = total/2 |
+
+---
+
 ## Attribution
 
-The frameworks and problem derivations in this file are inspired by and adapted from labuladong's algorithmic guides (labuladong.online), which provide a comprehensive framework-first approach to algorithm learning. Content has been restructured and annotated for Socratic teaching use with Python code templates, embedded prompts, and cross-references to the leetcode-teacher skill's reference system.
+The frameworks and problem derivations in this file are inspired by and adapted from labuladong's algorithmic guides (labuladong.online) and the Tech Interview Handbook (techinterviewhandbook.org) dynamic programming cheatsheet, which provide a comprehensive framework-first approach to algorithm learning. Content has been restructured and annotated for Socratic teaching use with Python code templates, embedded prompts, and cross-references to the leetcode-teacher skill's reference system.

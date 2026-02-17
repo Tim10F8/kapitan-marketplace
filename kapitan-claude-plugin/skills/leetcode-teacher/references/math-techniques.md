@@ -16,6 +16,32 @@ Essential mathematical techniques for coding interviews: modular arithmetic, fas
 
 ---
 
+## Corner Cases
+
+- **Negative numbers:** Check if the problem input can be negative. Many math problems assume positive integers — verify constraints.
+- **Floats:** Never compare floats with `==`. Use epsilon comparison: `abs(x - y) <= 1e-6` (see Comparing Floats section below).
+- **Multiplication overflow:** `a * b` can overflow in fixed-width languages even if both factors fit. In Python this isn't an issue (arbitrary precision), but in Java/C++ multiply before mod.
+- **Division by zero:** Always guard against division/modulo by zero. Check denominators before dividing.
+- **Multiply by 1 / add 0:** These are identity operations. Ensure your logic doesn't accidentally skip them or break on them.
+
+---
+
+## Common Formulas
+
+Quick reference for frequently needed math formulas in interviews:
+
+| Formula | Expression | Notes |
+|---------|-----------|-------|
+| Check even | `num % 2 == 0` | Equivalent to `num & 1 == 0` |
+| Sum of 1 to N | `N * (N + 1) // 2` | Gauss's formula, avoids O(N) loop |
+| Sum of GP (2^0 to 2^n) | `2**(n + 1) - 1` | Geometric progression with ratio 2 |
+| Permutations P(N, K) | `N! / (N - K)!` | Order matters |
+| Combinations C(N, K) | `N! / (K! * (N - K)!)` | Order doesn't matter |
+
+*Socratic prompt: "If someone asks you to sum the first 100 positive integers in O(1), what formula would you use? Can you prove why it works?"*
+
+---
+
 ## 1. Modular Arithmetic
 
 ### Core Insight
@@ -116,6 +142,25 @@ def super_pow(a: int, b: list[int]) -> int:
 |---------|-----------|
 | Pow(x, n) (50) | Handle negative exponents: `x^(-n) = 1 / x^n` |
 | Super Pow (372) | Exponent as digit array, decompose: `a^(10k+d) = (a^k)^10 * a^d` |
+
+### Comparing Floats
+
+Floating point arithmetic introduces rounding errors. Never use `==` to compare floats:
+
+```python
+# BAD: will fail due to floating point precision
+if x == y:
+    ...
+
+# GOOD: epsilon comparison
+EPSILON = 1e-6
+if abs(x - y) <= EPSILON:
+    ...
+```
+
+**When this matters:** Sqrt(x) (LC 69) when using Newton's method, geometric distance calculations, and any problem involving division that produces non-integer results.
+
+*Socratic prompt: "Why does 0.1 + 0.2 != 0.3 in most programming languages? How does this affect algorithm correctness?"*
 
 ---
 
@@ -279,6 +324,32 @@ def preimage_size_fzf(k: int) -> int:
 
 ---
 
+## Interview Tips
+
+- **Always ask about negative numbers.** Many math problems have subtle behavior changes with negative inputs (e.g., Pow(x, n) with negative exponent, integer division rounding direction).
+- **Watch for overflow/underflow.** In languages with fixed-width integers, intermediate multiplication results can overflow. Apply modular arithmetic at every step, not just at the end.
+- **Guard against division/modulo by zero.** Even if the problem constraints say "non-zero," defensive checks show good engineering habits.
+- **Mention time complexity optimizations.** Interviewers love hearing "I can compute this in O(log n) using fast exponentiation instead of O(n)."
+
+---
+
+## Practice Questions
+
+### Essential
+
+| Problem | Key Concept |
+|---------|-------------|
+| Sqrt(x) (69) | Binary search or Newton's method; float comparison matters |
+| Pow(x, n) (50) | Fast exponentiation with negative exponent handling |
+
+### Recommended
+
+| Problem | Key Concept |
+|---------|-------------|
+| Integer to English Words (273) | Decomposition by place value (thousands, millions, billions) |
+
+---
+
 ## Attribution
 
-Content synthesized from labuladong's algorithmic guide, Chapter 4 — "Other Common Techniques: Math Techniques." Reorganized and augmented with Socratic teaching prompts, cross-references, and code templates for the leetcode-teacher skill.
+Content synthesized from labuladong's algorithmic guide, Chapter 4 — "Other Common Techniques: Math Techniques," and the Tech Interview Handbook (techinterviewhandbook.org) math cheatsheet. Reorganized and augmented with Socratic teaching prompts, cross-references, and code templates for the leetcode-teacher skill.

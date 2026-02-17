@@ -16,6 +16,13 @@ Common bit manipulation tricks and techniques for coding interviews. These probl
 
 ---
 
+## Corner Cases
+
+- **Negative numbers:** In languages with fixed-width integers, negative numbers use two's complement. Be aware of sign bit behavior (Python integers have arbitrary precision, so this matters less in Python but is critical in Java/C++).
+- **Overflow / underflow:** Shifting left can overflow in fixed-width languages. `1 << 31` in a 32-bit signed integer is negative. Use unsigned types or language-specific guards when needed.
+
+---
+
 ## 1. The n & (n-1) Trick
 
 ### Core Insight
@@ -216,6 +223,9 @@ n & 0b111  # Fast bit mask (8 = 2^3, mask = 0b111 = 7)
 | Absolute value | `(n ^ (n >> 31)) - (n >> 31)` | Uses sign extension |
 | Get lowest set bit | `n & (-n)` | Isolates the rightmost 1 |
 | Turn off lowest set bit | `n & (n - 1)` | See Section 1 |
+| Toggle the kth bit | `n ^ (1 << k)` | Flips bit k (0→1 or 1→0) |
+| Multiply by 2^k | `n << k` | Left shift = multiply by power of 2 |
+| Divide by 2^k | `n >> k` | Right shift = floor divide by power of 2 |
 | Check if power of 2 | `n > 0 and n & (n-1) == 0` | Exactly one set bit |
 
 ### When to Use Bit Manipulation
@@ -235,6 +245,26 @@ n & 0b111  # Fast bit mask (8 = 2^3, mask = 0b111 = 7)
 
 ---
 
+## Practice Questions
+
+### Essential
+
+| Problem | Key Concept |
+|---------|-------------|
+| Number of 1 Bits (191) | n & (n-1) loop to count set bits |
+| Sum of Two Integers (371) | Add without `+`: carry = `a & b`, sum = `a ^ b` |
+
+### Recommended
+
+| Problem | Key Concept |
+|---------|-------------|
+| Single Number (136) | XOR all elements — pairs cancel |
+| Reverse Bits (190) | Build result bit by bit with shifts |
+| Missing Number (268) | XOR indices with values |
+| Counting Bits (338) | DP: `bits[n] = bits[n & (n-1)] + 1` |
+
+---
+
 ## Attribution
 
-Content synthesized from labuladong's algorithmic guide, Chapter 4 — "Other Common Techniques: Bit Manipulation." Reorganized and augmented with Socratic teaching prompts, cross-references, and code templates for the leetcode-teacher skill.
+Content synthesized from labuladong's algorithmic guide, Chapter 4 — "Other Common Techniques: Bit Manipulation," and the Tech Interview Handbook (techinterviewhandbook.org) bit manipulation cheatsheet. Reorganized and augmented with Socratic teaching prompts, cross-references, and code templates for the leetcode-teacher skill.
