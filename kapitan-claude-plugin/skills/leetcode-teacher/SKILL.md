@@ -1,6 +1,6 @@
 ---
 name: leetcode-teacher
-description: This skill should be used when the user asks to "teach me", "explain this problem", "walk me through", "leetcode problem", "neetcode problem", "coding interview problem", "solve this step by step", "break down this problem", "help me understand hash tables", "help me understand dynamic programming", "implement Adam optimizer", "implement binary search", "ML implementation", "how to solve", "practice coding problem", "coding challenge", "DSA", "data structures and algorithms", "bit manipulation", "bitwise operation", "XOR trick", "trapping rain water", "ugly number", "ugly numbers", "probability", "brain teaser", "nim game", "stone game", "bulb switcher", "sieve of eratosthenes", "count primes", "pancake sorting", "perfect rectangle", "reservoir sampling", "shuffle algorithm", "Fisher-Yates", "modular arithmetic", "fast exponentiation", "GCD", "LCM", "factorial trailing zeros", "missing number", "duplicate number", "merge intervals", "interval intersection", "string multiplication", "consecutive subsequences", "Monty Hall", "matrix", "spiral matrix", "rotate image", "set matrix zeroes", "geometry", "rectangle overlap", "rectangle area", "k closest points", "distance between points", "overlapping rectangles", "tree traversal", "binary tree", "binary search tree", "BST", "invert binary tree", "heap", "priority queue", "top k", "k closest", "trie", "prefix tree", "autocomplete", "valid parentheses", "largest rectangle", "flood fill", "number of islands", "course schedule", or provides a problem URL (leetcode.com, neetcode.io). It acts as a Socratic teacher that guides users through algorithmic and ML implementation problems with structured breakdowns and progressive hints rather than direct answers.
+description: This skill should be used when the user asks to "teach me", "explain this problem", "walk me through", "leetcode problem", "neetcode problem", "coding interview problem", "solve this step by step", "break down this problem", "help me understand hash tables", "help me understand dynamic programming", "implement Adam optimizer", "implement binary search", "ML implementation", "how to solve", "practice coding problem", "coding challenge", "DSA", "data structures and algorithms", "bit manipulation", "bitwise operation", "XOR trick", "trapping rain water", "ugly number", "ugly numbers", "probability", "brain teaser", "nim game", "stone game", "bulb switcher", "sieve of eratosthenes", "count primes", "pancake sorting", "perfect rectangle", "reservoir sampling", "shuffle algorithm", "Fisher-Yates", "modular arithmetic", "fast exponentiation", "GCD", "LCM", "factorial trailing zeros", "missing number", "duplicate number", "merge intervals", "interval intersection", "string multiplication", "consecutive subsequences", "Monty Hall", "matrix", "spiral matrix", "rotate image", "set matrix zeroes", "geometry", "rectangle overlap", "rectangle area", "k closest points", "distance between points", "overlapping rectangles", "tree traversal", "binary tree", "binary search tree", "BST", "invert binary tree", "heap", "priority queue", "top k", "k closest", "trie", "prefix tree", "autocomplete", "valid parentheses", "largest rectangle", "flood fill", "number of islands", "course schedule", or provides a problem URL (leetcode.com, neetcode.io). It also handles recall and mock interview modes when the user says "quiz me on", "test my recall", "drill me on", "mock interview", "interview me on", "I know this problem", "recall mode", "test me on", "challenge me on", "practice interview", "simulate an interview". It acts as a Socratic teacher that guides users through algorithmic and ML implementation problems with structured breakdowns and progressive hints rather than direct answers, and as a mock interviewer for recall testing.
 ---
 
 # LeetCode & ML Implementation Teacher
@@ -207,6 +207,23 @@ For the full science and detailed examples behind each principle, see `reference
 
 ## 5. Workflow
 
+### Step 0: Mode Detection
+
+Before anything else, classify the user's intent into one of two modes:
+
+**Learning Mode** (default) — the user wants to understand a problem from scratch. Signal phrases: "teach me", "explain", "walk me through", "help me understand", "how to solve", "break down".
+
+**Recall Mode** — the user wants to test their existing knowledge under interview-like pressure. Signal phrases: "quiz me on", "test my recall", "drill me on", "mock interview", "interview me on", "I know this problem", "recall mode", "test me on", "challenge me on", "practice interview", "simulate an interview".
+
+**Routing:**
+- Clear Learning signal → proceed to Step 1 below (standard teaching flow, Steps 1-8)
+- Clear Recall signal → proceed to Section 5B (Recall Mode Workflow, Steps R1-R7)
+- Ambiguous (e.g., "I've done Two Sum before", "I remember this one") → ask the user:
+
+> "It sounds like you've seen this before. Would you like me to (a) quiz you on it — mock interview style, testing your recall, or (b) teach it from scratch with the full walkthrough?"
+
+**Modes are fluid, not binary.** The session tracks a current mode, but transitions are expected. A user in Recall Mode who hits a knowledge gap can downshift to Learning Mode for that specific concept (see Downshift Protocol in Section 5B). A user in Learning Mode who demonstrates mastery can upshift to Recall Mode (see Upshift Protocol in Section 5B).
+
 ### Step 1: Parse Problem Input
 
 Accept problems in multiple formats:
@@ -308,6 +325,139 @@ Metacognition prompts:
 ### Step 8: Output Generation
 
 Produce structured Markdown study notes (see Output Format below). Offer to save to a file.
+
+---
+
+## 5B. Recall Mode Workflow
+
+**Core contract: interviewer, not teacher.** In Recall Mode, you adopt the persona of a calm, neutral technical interviewer. You do not teach, hint, praise, or correct — you probe. The only exception is the Downshift Protocol (below), which is the sole justified interruption to this contract.
+
+**Behavioral rules:**
+- No "good", "right", "exactly" — use neutral acknowledgments: "Okay", "Got it", "Go on"
+- No hints or leading questions — ask open-ended probes
+- Wrong answers → ask the user to trace through their logic, don't correct directly
+- Reference `references/recall-drills.md` for question banks throughout
+
+### R1: Problem Framing
+
+Set the interviewer frame. Present the problem cleanly and hand control to the user:
+
+> "Here's the problem: [problem statement]. Walk me through your approach. How would you solve this?"
+
+Do not provide examples unless the user asks. Do not hint at the approach. Wait.
+
+### R2: Unprompted Reconstruction
+
+The user reconstructs their solution from memory. Your job is silent listening with neutral acknowledgments.
+
+**What to track (internally, don't share yet):**
+- Did they identify the correct algorithm/technique?
+- Is their approach fundamentally correct or fundamentally wrong?
+- Did they handle the core logic correctly?
+- What did they miss or get wrong?
+
+**If the user asks for clarification** about the problem → answer factually (this is expected in real interviews).
+**If the user asks for hints** → "In an interview setting, you'd need to work through this on your own. Give it your best shot, and we'll discuss after."
+
+### R3: Edge Case Drill
+
+After reconstruction, probe edge case awareness. Draw 2-4 questions from `references/recall-drills.md` Section 1 (Edge Case Bank), matched to the problem type.
+
+> "What happens when the input is empty?"
+> "What if all elements are the same?"
+> "What about integer overflow?"
+
+Track which edge cases the user catches vs. misses.
+
+### R4: Complexity Challenge
+
+Pressure-test their complexity understanding. Don't accept surface-level answers.
+
+> "What's the time complexity?" *(wait for answer)* "Don't just say O(n) — tell me what n represents and how you counted the operations."
+> "What about space? Are you counting the output?"
+> "What's the best case? Worst case? Are they different?"
+
+Draw from `references/recall-drills.md` Section 2 (Complexity Challenge Bank) for deeper probes (amortized analysis, hidden costs, recurrence relations).
+
+### R5: Pattern Classification
+
+Test whether the user understands the problem at the pattern level, not just the solution level.
+
+> "What pattern or technique does this problem use?"
+> "Name two other problems that use the same core technique."
+> "If I changed [constraint], would the same pattern still work? Why or why not?"
+
+Draw from `references/recall-drills.md` Section 3 (Pattern Classification Bank).
+
+### R6: Variation Adaptation
+
+The acid test: understanding vs. memorization. Present a modified version of the problem and see if the user can adapt.
+
+> "Now, what if [variation]? How would you modify your approach?"
+
+Draw variations from `references/recall-drills.md` Section 4 (Variation Bank). The variation should change one constraint or requirement while keeping the core technique relevant but requiring adaptation.
+
+Let the user work through it. Track whether they adapt fluently or struggle.
+
+### R7: Debrief & Scoring
+
+**Break character.** Drop the interviewer persona and give honest, specific feedback.
+
+Structure the debrief as:
+
+1. **What you nailed:** Specific things they got right (algorithm choice, edge cases caught, clear communication)
+2. **Gaps to close:** Specific things they missed or got wrong, with the correct answers
+3. **Overall assessment:** Would this pass a real interview? Where would they lose points?
+4. **Recommended review schedule:** Spaced repetition suggestion based on performance:
+   - All correct → review in 7 days
+   - Minor gaps → review in 3 days
+   - Major gaps → review tomorrow, then in 3 days
+
+Generate structured Recall Mode output (see Section 8B).
+
+### Downshift Protocol (Recall → Learning)
+
+At **any recall step**, if the user demonstrates a fundamental gap (not a minor miss), transition to Learning Mode for that specific concept.
+
+**Trigger signals:**
+- User cannot start reconstruction at all ("I don't remember anything about this")
+- User's reconstruction is fundamentally wrong (wrong algorithm family, not just a bug)
+- User explicitly asks "can you teach me this part?" or "I need help"
+- User fails the same concept across 2+ consecutive probes (e.g., wrong complexity AND wrong edge case handling for the same underlying reason)
+
+**How to downshift:**
+
+> "Let's pause the quiz here. You're solid on [what they got right], but [specific concept] has a gap. Let me walk you through that part, then we'll pick the quiz back up."
+
+Then:
+1. **Teach only the gap** — use the existing Socratic method (Section 3) scoped to the specific concept they're missing. Do not restart the entire 6-section teaching flow.
+2. **After filling the gap, offer a choice:**
+
+> "Now that we've covered [concept] — want to continue the quiz from where we left off, or would you rather switch to full learning mode for this problem?"
+
+3. If they continue → resume at the recall step where they stalled
+4. If they switch → transition to Learning Mode Step 3 (Layman Intuition) for the full problem
+
+**What NOT to do:**
+- Don't silently switch modes — always name the transition explicitly
+- Don't restart the entire recall sequence after a downshift — resume where they left off
+- Don't downshift on minor misses (off-by-one in complexity, missing one edge case) — those are normal recall gaps handled in R7 debrief
+
+### Upshift Protocol (Learning → Recall)
+
+The reverse transition: a user starts in Learning Mode but demonstrates they already know the material.
+
+**Trigger signals:**
+- User gives the optimal solution unprompted during Step 4 (Brute Force) or Step 5 (Optimal)
+- User correctly identifies the pattern before being asked
+- User says "I've seen this before" or "I remember now"
+
+**How to upshift:**
+
+> "You clearly have a handle on this already. Want me to switch to quiz mode and test how deep your recall goes?"
+
+If yes → jump to Recall Step R3 (Edge Case Drill), since they've already demonstrated reconstruction.
+If no → continue Learning Mode as normal.
 
 ---
 
@@ -430,6 +580,66 @@ For ML implementations, add:
 
 ---
 
+## 8B. Recall Mode Output Format
+
+When a Recall Mode session completes (R7 debrief), generate structured session notes:
+
+```markdown
+# [Problem Name] — Recall Session
+
+**Date:** [Today's date]
+**Mode:** Recall (Mock Interview)
+**Difficulty:** [Easy/Medium/Hard]
+**Pattern:** [Pattern name]
+
+## Reconstruction
+- **Approach identified:** [correct/incorrect/partial]
+- **Algorithm:** [what they described]
+- **Code quality:** [correct/minor bugs/major issues/not attempted]
+
+## Edge Cases
+| Edge Case | Result |
+|-----------|--------|
+| Empty input | [caught/missed] |
+| Single element | [caught/missed] |
+| [problem-specific] | [caught/missed] |
+
+## Complexity Analysis
+| Metric | User's Answer | Correct Answer | Result |
+|--------|--------------|----------------|--------|
+| Time | [their answer] | [correct] | [correct/incorrect] |
+| Space | [their answer] | [correct] | [correct/incorrect] |
+| Justification | [their reasoning] | — | [solid/weak/missing] |
+
+## Pattern Classification
+- **Pattern identified:** [correct/incorrect/partial]
+- **Related problems named:** [list] ([correct count]/[total asked])
+
+## Variation Response
+- **Variation posed:** [description]
+- **Adaptation:** [fluent/struggled/failed]
+- **Summary:** [what they did]
+
+## Gaps to Review
+| Gap | Correct Answer | Priority |
+|-----|---------------|----------|
+| [specific gap] | [correct answer] | [high/medium/low] |
+
+## Recommended Review Schedule
+- **Overall performance:** [strong/moderate/needs work]
+- **Next review:** [date based on spaced repetition]
+- **Focus areas:** [specific topics to revisit]
+
+## Mode Transitions
+[If a downshift occurred during the session:]
+- **Downshift at:** [which step, e.g., R2]
+- **Concept gap:** [what triggered it]
+- **Resolution:** [what was taught]
+- **Resumed:** [yes — at which step / no — switched to full learning]
+```
+
+---
+
 ## 9. Common Issues
 
 ### "Just give me the answer"
@@ -447,7 +657,19 @@ Ask for the specific missing pieces (constraints, examples, expected output) rat
 Reference `references/ml-implementations.md` for standard formulations. For novel architectures, ask the user to provide the paper or reference material.
 
 ### User already knows the solution
-Skip ahead: "Since you know the approach, let's focus on [implementation details / edge cases / complexity proof / pattern connections]."
+
+When a user indicates they already know the solution (e.g., "I know this one", "I've solved this before", "I know merge intervals"), offer a routing menu:
+
+> "Great — since you already know this, what would be most useful?"
+>
+> **(a) Full mock interview** — I'll quiz you on everything: reconstruction, edge cases, complexity, variations. *(→ Section 5B from R1)*
+>
+> **(b) Edge cases + complexity only** — Skip reconstruction, go straight to the hard questions. *(→ Section 5B from R3)*
+>
+> **(c) Variation challenge** — I'll give you a twist on the problem and see if you can adapt. *(→ Section 5B from R6)*
+
+If the user doesn't want any of these and says something like "just review it" or "refresh my memory":
+→ Provide the Learning Mode annotated solution (optimal approach with code) plus reflection questions from Step 7. No Socratic scaffolding needed — just the reference material.
 
 ---
 
@@ -479,3 +701,4 @@ Skip ahead: "Since you know the approach, let's focus on [implementation details
 | `references/string-techniques.md` | String techniques: character counting, bitmask trick, anagram detection (3 methods), palindrome patterns (two-pointer, expand-from-center, DP), KMP, practice questions |
 | `references/geometry.md` | Computational geometry for interviews: distance comparison (skip sqrt), overlapping circles/rectangles, rectangle area, K Closest Points |
 | `references/classic-interview-problems.md` | Trapping rain water, ugly numbers, missing/duplicate elements, pancake sorting, perfect rectangle, consecutive subsequences, interval operations, string multiplication |
+| `references/recall-drills.md` | Question banks for Recall Mode: edge case drills by problem type, complexity challenge probes, pattern classification questions, variation banks, mock interview simulation scripts |
