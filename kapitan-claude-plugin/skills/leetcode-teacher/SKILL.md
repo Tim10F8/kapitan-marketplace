@@ -303,6 +303,7 @@ When the optimal solution uses a specific technique, load the matching reference
 | Classic interview problems (trapping rain water, ugly numbers, intervals) | `classic-interview-problems.md` |
 | N-Sum, LRU/LFU Cache, state machine DP, subsequence DP, Dijkstra | `advanced-patterns.md` |
 | Advanced string algorithms (hashing, suffix array/automaton, Aho-Corasick, Manacher, Lyndon) | `string-algorithms-advanced.md` |
+| Linear algebra (Gaussian elimination, determinants, rank, LU decomposition) | `linear-algebra-gauss.md` |
 
 When sorting is part of the optimal solution, also ask: *"Which sort would you use and why? What properties matter — stability, in-place, worst-case guarantee?"*
 
