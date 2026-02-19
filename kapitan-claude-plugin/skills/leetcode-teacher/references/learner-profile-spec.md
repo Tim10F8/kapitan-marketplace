@@ -123,3 +123,60 @@ All timestamps use: `YYYY-MM-DDTHH:MM` (e.g., `2026-02-19T14:30`). No seconds, n
 ## Session ID
 
 Extracted from hook input JSON (`session_id` field). Used in ledger rows for debugging. If unavailable, use `manual`.
+
+---
+
+## Update Protocol
+
+### Timestamp Rule
+
+Use a single Session Timestamp for all writes in a session — ledger row, profile session header, and all weakness field updates (`Last tested`, `Last failed`, `Last clean streak start`, `First observed`). Source precedence:
+1. `Session Timestamp` from `=== SESSION METADATA ===` (injected at session start)
+2. `Session Timestamp` from `~/.claude/leetcode-session-state.md` (after compaction)
+3. **Fallback** (neither available — hook failure or manual invocation): run `date +%Y-%m-%dT%H:%M` via Bash tool to get the current time
+
+### Update Protocol — Learning Mode
+
+After generating study notes, update the persistent learner profile. **Write ledger first (source of truth), then profile (elaboration).**
+
+1. **Append row to Ledger** (`~/.claude/leetcode-teacher-ledger.md`):
+   - Session Timestamp (per timestamp rule above), session_id (from `=== SESSION METADATA ===` or `leetcode-session-state.md`, else `manual`), problem name, pattern, mode (`learning`), verdict label (`solved_independently` / `solved_with_minor_hints` / `solved_with_significant_scaffolding` / `did_not_reach_solution`), gaps (semicolon-separated tags, or `none`), review due date.
+
+2. **Append to Session History** in profile (`~/.claude/leetcode-teacher-profile.md`), newest first. Enforce 20-entry cap by removing the oldest entry if needed. Use the semi-structured format:
+   ```
+   ### [ISO timestamp] | [problem-name] | learning | [verdict_label]
+   Gaps: [semicolon-separated tags, or "none"]
+   Review: [ISO date]
+   ---
+   [2-4 sentences of natural language observations]
+   ```
+   Verdict and gap tags **must match** the ledger row exactly.
+
+3. **Update Known Weaknesses**:
+   - **Gap observed again** → update `Last tested`, `Last failed`, reset `Last clean streak start` to empty, set `Sessions since last failure` to 0. Status → `recurring` if was `new`, stays `recurring` if already was. All timestamps use Session Timestamp.
+   - **Gap NOT observed when expected** → update `Last tested`, increment `Sessions since last failure`. If streak just started, set `Last clean streak start` to Session Timestamp. After 3+ consecutive clean sessions: mark `resolved (short-term)`. For long-term: check that `Last clean streak start` spans 4+ weeks (verify against ledger).
+   - **New gap** → add with status `new`, `First observed: [Session Timestamp]`. Description **must** name a specific input class or code pattern (not "struggles with edge cases" but "misses empty input check on array problems").
+   - Enforce 20-entry active cap. If full, promote the most-resolved entry or ask the learner which to archive.
+
+4. **Confirm** briefly — don't dump the full profile. On first session (if `[FIRST SESSION]` tag was present), show the About Me draft populated from session observations and ask the learner to correct/confirm.
+
+### Update Protocol — Recall Mode
+
+After the R7 debrief, update the persistent learner profile. **Write ledger first, then profile.**
+
+1. **Append row to Ledger** (`~/.claude/leetcode-teacher-ledger.md`):
+   - Session Timestamp (per timestamp rule above), session_id (from `=== SESSION METADATA ===` or `leetcode-session-state.md`, else `manual`), problem, pattern, mode (`recall`), verdict from R7 (`strong_pass` / `pass` / `borderline` / `needs_work`), gaps (semicolon-separated tags), review due date.
+   - **Review interval from R7 verdict:** Strong Pass = previous interval x2 (minimum 7d), Pass = previous interval x1.5 (minimum 5d), Borderline = 2d, Needs Work = 1d. If no previous interval exists, use the minimums.
+
+2. **Append to Session History** in profile (newest first, enforce 20-entry cap by removing oldest if needed):
+   - Use the semi-structured format: `### [timestamp] | [problem] | recall | [verdict]` followed by `Gaps:`, `Review:`, `---`, and 2-4 observation sentences.
+   - Verdict and gap tags **must match** the ledger row.
+   - Note trajectory vs. previous sessions (consult ledger for older entries if needed).
+
+3. **Update Known Weaknesses** (same rules as Learning Mode above):
+   - Gap observed again → update `Last tested`, `Last failed`, reset `Last clean streak start`, status to `recurring`. All timestamps use Session Timestamp.
+   - Gap NOT observed → update `Last tested`, increment `Sessions since last failure`, manage streak/resolution. All timestamps use Session Timestamp.
+   - New gap → add with status `new`, `First observed: [Session Timestamp]`, must name specific input class or code pattern.
+   - Enforce 20-entry active cap.
+
+4. **Confirm** briefly. On first session, show About Me draft and ask learner to correct.

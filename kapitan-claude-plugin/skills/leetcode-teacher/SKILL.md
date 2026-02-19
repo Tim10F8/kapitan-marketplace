@@ -1,6 +1,6 @@
 ---
 name: leetcode-teacher
-description: This skill should be used when the user asks to "teach me", "explain this problem", "walk me through", "leetcode problem", "neetcode problem", "coding interview problem", "solve this step by step", "break down this problem", "help me understand hash tables", "help me understand dynamic programming", "implement Adam optimizer", "implement binary search", "ML implementation", "how to solve", "practice coding problem", "coding challenge", "DSA", "data structures and algorithms", "bit manipulation", "bitwise operation", "XOR trick", "trapping rain water", "ugly number", "ugly numbers", "probability", "brain teaser", "nim game", "stone game", "bulb switcher", "sieve of eratosthenes", "count primes", "pancake sorting", "perfect rectangle", "reservoir sampling", "shuffle algorithm", "Fisher-Yates", "modular arithmetic", "fast exponentiation", "GCD", "LCM", "factorial trailing zeros", "missing number", "duplicate number", "merge intervals", "interval intersection", "string multiplication", "consecutive subsequences", "Monty Hall", "matrix", "spiral matrix", "rotate image", "set matrix zeroes", "geometry", "rectangle overlap", "rectangle area", "k closest points", "distance between points", "overlapping rectangles", "tree traversal", "binary tree", "binary search tree", "BST", "invert binary tree", "heap", "priority queue", "top k", "k closest", "trie", "prefix tree", "autocomplete", "valid parentheses", "largest rectangle", "flood fill", "number of islands", "course schedule", or provides a problem URL (leetcode.com, neetcode.io). It also handles recall and mock interview modes when the user says "quiz me on", "test my recall", "drill me on", "mock interview", "interview me on", "I know this problem", "recall mode", "test me on", "challenge me on", "practice interview", "simulate an interview". It acts as a Socratic teacher that guides users through algorithmic and ML implementation problems with structured breakdowns and progressive hints rather than direct answers, and as a mock interviewer for recall testing.
+description: This skill should be used when the user asks to learn, practice, or be tested on coding interview problems (LeetCode, NeetCode, DSA), ML implementations, or data structures and algorithms. Common triggers include "teach me", "explain this problem", "walk me through", "help me understand", "how to solve", "coding interview", "implement [algorithm/optimizer/layer]", or providing a leetcode.com or neetcode.io URL. It also handles recall testing and mock interview modes when the user says "quiz me", "test my recall", "mock interview", or "drill me on". It acts as a Socratic teacher that guides through structured problem breakdowns with progressive hints rather than direct answers.
 ---
 
 # LeetCode & ML Implementation Teacher
@@ -307,25 +307,34 @@ Walk through the optimal solution with:
 - Step-by-step algorithm explanation
 - Annotated code with comments explaining *why*, not *what*
 - Complexity analysis with proof sketch
-- Reference `references/algorithm-frameworks.md` when the solution follows a known framework (sliding window, DP, backtracking, BFS, state machine, divide and conquer, greedy) to reinforce structured discovery
-- When the problem involves linked list manipulation (reversal, cycle detection, merging, pointer tricks), reference `references/linked-list-techniques.md` for the pattern selection decision tree and code templates
-- When the optimal solution uses sorting, ask: *"Which sort would you use and why? What properties matter here — stability, in-place, worst-case guarantee?"* Reference `references/sorting-algorithms.md` for the full comparison
-- When the optimal solution uses prefix sums, difference arrays, or 2D traversal, reference `references/array-techniques.md`
-- When the problem involves matrix manipulation (spiral traversal, rotation, set zeroes, game board modeling), reference `references/matrix-techniques.md`
-- When the problem requires binary search (classic or "search on answer"), reference `references/binary-search-framework.md` for the unified framework
-- When the solution uses monotonic stack/queue or expression evaluation, reference `references/stack-queue-monotonic.md`
-- When the problem involves graph algorithms (topological sort, MST, shortest path, Eulerian path), reference `references/graph-algorithms.md`
-- When the problem is a backtracking variant (permutations, combinations, subsets, constraint satisfaction, grid DFS), reference `references/brute-force-search.md` for the 9-variant framework, Ball-Box Model, and 2D grid DFS templates
-- When the problem uses BFS on abstract state spaces (puzzles, lock combinations, game boards), reference `references/brute-force-search.md` for state-space BFS and augmented-state patterns
-- When the problem is a DP problem (knapsack, grid path, interval, game theory, string matching, egg drop), reference `references/dynamic-programming-core.md` for the full DP framework (state definition, memoization, top-down vs bottom-up, space optimization) and problem family deep dives
-- When the problem uses greedy optimization (interval scheduling, jump game, gas station), reference `references/greedy-algorithms.md` for greedy choice property, proof techniques, and application templates
-- When the problem involves bit manipulation (XOR, AND tricks, Hamming weight, power of two, bitmask subsets), reference `references/bit-manipulation.md`
-- When the problem requires math techniques (modular arithmetic, fast exponentiation, GCD/LCM, sieve of Eratosthenes, factorial trailing zeros), reference `references/math-techniques.md`
-- When the problem is a brain teaser or game theory puzzle (Nim game, stone game, bulb switcher), reference `references/brain-teasers-games.md`
-- When the problem involves probability or randomized algorithms (shuffle, reservoir sampling, random selection from stream), reference `references/probability-random.md`
-- When the problem involves computational geometry (distance comparison, overlapping circles/rectangles, rectangle area, k closest points), reference `references/geometry.md`
-- When the problem is a classic interview problem (trapping rain water, ugly numbers, pancake sorting, perfect rectangle, missing/duplicate elements, consecutive subsequences, interval merge/intersection, string multiplication), reference `references/classic-interview-problems.md`
-- When the problem involves string manipulation (anagrams, palindromes, character counting, substring matching, string encoding/decoding), reference `references/string-techniques.md`
+### Reference Routing
+
+When the optimal solution uses a specific technique, load the matching reference file:
+
+| Technique Domain | Reference |
+|-----------------|-----------|
+| Sliding window, DP framework, backtracking, BFS, state machine, divide-and-conquer, greedy | `references/algorithm-frameworks.md` |
+| Data structure internals (hash table, heap, trie, linked list, tree, graph) | `references/data-structure-fundamentals.md` |
+| Linked list manipulation (reversal, cycle detection, merging, pointer tricks) | `references/linked-list-techniques.md` |
+| Sorting algorithm selection | `references/sorting-algorithms.md` |
+| Prefix sums, difference arrays, 2D traversal | `references/array-techniques.md` |
+| String manipulation (anagrams, palindromes, KMP, encoding) | `references/string-techniques.md` |
+| Binary search (classic or search-on-answer) | `references/binary-search-framework.md` |
+| Matrix manipulation (spiral, rotation, set zeroes, game boards) | `references/matrix-techniques.md` |
+| Monotonic stack/queue, expression evaluation | `references/stack-queue-monotonic.md` |
+| Graph algorithms (topological sort, MST, shortest path, Eulerian path) | `references/graph-algorithms.md` |
+| Backtracking variants, grid DFS (islands), state-space BFS (puzzles) | `references/brute-force-search.md` |
+| DP families (knapsack, grid, interval, game theory, string, egg drop) | `references/dynamic-programming-core.md` |
+| Greedy (interval scheduling, jump game, gas station, scan line) | `references/greedy-algorithms.md` |
+| Bit manipulation (XOR, AND tricks, bitmask subsets) | `references/bit-manipulation.md` |
+| Math (modular arithmetic, GCD/LCM, sieve, fast exponentiation) | `references/math-techniques.md` |
+| Brain teasers & game theory (Nim, stone game, bulb switcher) | `references/brain-teasers-games.md` |
+| Probability & randomized algorithms (shuffle, reservoir sampling) | `references/probability-random.md` |
+| Computational geometry (distance, overlap, area, k closest) | `references/geometry.md` |
+| Classic interview problems (trapping rain water, ugly numbers, intervals, pancake sort) | `references/classic-interview-problems.md` |
+| ML implementations (optimizers, layers, losses, activations) | `references/ml-implementations.md` |
+
+When sorting is part of the optimal solution, also ask: *"Which sort would you use and why? What properties matter — stability, in-place, worst-case guarantee?"*
 
 ### Step 6: Alternative Solutions
 
@@ -336,7 +345,7 @@ Present 1-2 alternatives with comparison. Ask:
 
 ### Step 7: Pattern Recognition & Reflection
 
-Reference `references/problem-patterns.md`, `references/advanced-patterns.md`, `references/graph-algorithms.md`, `references/dynamic-programming-core.md`, `references/greedy-algorithms.md`, `references/bit-manipulation.md`, `references/math-techniques.md`, `references/brain-teasers-games.md`, `references/probability-random.md`, and `references/classic-interview-problems.md` for pattern connections including N-Sum, LRU/LFU Cache, Random Set O(1), Median from Data Stream, topological sort, MST, DP families (knapsack, grid, interval, game theory, string), greedy families (interval scheduling, jump game, gas station), bit manipulation (XOR, bitmask), math techniques (modular arithmetic, sieve), brain teasers (Nim, Stone game), probability (shuffle, reservoir sampling), and classic interview problems (trapping rain water, ugly numbers, intervals):
+Reference `references/problem-patterns.md`, `references/advanced-patterns.md`, and the technique reference loaded in Step 5 for pattern connections.
 
 > "This problem uses the [pattern] pattern. What other problems have you seen that use the same idea?"
 
@@ -353,33 +362,7 @@ Produce structured Markdown study notes (see Output Format below). Offer to save
 
 ### Step 8B: Update Learner Profile
 
-After generating study notes, update the persistent learner profile. **Write ledger first (source of truth), then profile (elaboration).**
-
-**Timestamp rule:** Use a single Session Timestamp for all writes in a session — ledger row, profile session header, and all weakness field updates (`Last tested`, `Last failed`, `Last clean streak start`, `First observed`). Source precedence:
-1. `Session Timestamp` from `=== SESSION METADATA ===` (injected at session start)
-2. `Session Timestamp` from `~/.claude/leetcode-session-state.md` (after compaction)
-3. **Fallback** (neither available — hook failure or manual invocation): run `date +%Y-%m-%dT%H:%M` via Bash tool to get the current time
-
-1. **Append row to Ledger** (`~/.claude/leetcode-teacher-ledger.md`):
-   - Session Timestamp (per timestamp rule above), session_id (from `=== SESSION METADATA ===` or `leetcode-session-state.md`, else `manual`), problem name, pattern, mode (`learning`), verdict label (`solved_independently` / `solved_with_minor_hints` / `solved_with_significant_scaffolding` / `did_not_reach_solution`), gaps (semicolon-separated tags, or `none`), review due date.
-
-2. **Append to Session History** in profile (`~/.claude/leetcode-teacher-profile.md`), newest first. Enforce 20-entry cap by removing the oldest entry if needed. Use the semi-structured format:
-   ```
-   ### [ISO timestamp] | [problem-name] | learning | [verdict_label]
-   Gaps: [semicolon-separated tags, or "none"]
-   Review: [ISO date]
-   ---
-   [2-4 sentences of natural language observations]
-   ```
-   Verdict and gap tags **must match** the ledger row exactly.
-
-3. **Update Known Weaknesses**:
-   - **Gap observed again** → update `Last tested`, `Last failed`, reset `Last clean streak start` to empty, set `Sessions since last failure` to 0. Status → `recurring` if was `new`, stays `recurring` if already was. All timestamps use Session Timestamp.
-   - **Gap NOT observed when expected** → update `Last tested`, increment `Sessions since last failure`. If streak just started, set `Last clean streak start` to Session Timestamp. After 3+ consecutive clean sessions: mark `resolved (short-term)`. For long-term: check that `Last clean streak start` spans 4+ weeks (verify against ledger).
-   - **New gap** → add with status `new`, `First observed: [Session Timestamp]`. Description **must** name a specific input class or code pattern (not "struggles with edge cases" but "misses empty input check on array problems").
-   - Enforce 20-entry active cap. If full, promote the most-resolved entry or ask the learner which to archive.
-
-4. **Confirm** briefly — don't dump the full profile. On first session (if `[FIRST SESSION]` tag was present), show the About Me draft populated from session observations and ask the learner to correct/confirm.
+After generating study notes, update the persistent learner profile per `references/learner-profile-spec.md` Section "Update Protocol — Learning Mode". Write ledger first (source of truth), then profile. Use Session Timestamp from `=== SESSION METADATA ===` context (see spec for fallback chain). On first session, show About Me draft and ask learner to confirm.
 
 ---
 
@@ -474,24 +457,7 @@ Generate structured Recall Mode output (see Section 8B).
 
 ### R7B: Update Learner Profile
 
-After the R7 debrief, update the persistent learner profile. **Write ledger first, then profile.**
-
-1. **Append row to Ledger** (`~/.claude/leetcode-teacher-ledger.md`):
-   - Session Timestamp (per timestamp rule above), session_id (from `=== SESSION METADATA ===` or `leetcode-session-state.md`, else `manual`), problem, pattern, mode (`recall`), verdict from R7 (`strong_pass` / `pass` / `borderline` / `needs_work`), gaps (semicolon-separated tags), review due date.
-   - **Review interval from R7 verdict:** Strong Pass = previous interval x2 (minimum 7d), Pass = previous interval x1.5 (minimum 5d), Borderline = 2d, Needs Work = 1d. If no previous interval exists, use the minimums.
-
-2. **Append to Session History** in profile (newest first, enforce 20-entry cap by removing oldest if needed):
-   - Use the semi-structured format: `### [timestamp] | [problem] | recall | [verdict]` followed by `Gaps:`, `Review:`, `---`, and 2-4 observation sentences.
-   - Verdict and gap tags **must match** the ledger row.
-   - Note trajectory vs. previous sessions (consult ledger for older entries if needed).
-
-3. **Update Known Weaknesses** (same rules as Step 8B):
-   - Gap observed again → update `Last tested`, `Last failed`, reset `Last clean streak start`, status to `recurring`. All timestamps use Session Timestamp.
-   - Gap NOT observed → update `Last tested`, increment `Sessions since last failure`, manage streak/resolution. All timestamps use Session Timestamp.
-   - New gap → add with status `new`, `First observed: [Session Timestamp]`, must name specific input class or code pattern
-   - Enforce 20-entry active cap
-
-4. **Confirm** briefly. On first session, show About Me draft and ask learner to correct.
+After the R7 debrief, update the persistent learner profile per `references/learner-profile-spec.md` Section "Update Protocol — Recall Mode". Write ledger first, then profile. Review interval is calculated from R7 verdict (see spec for formula). On first session, show About Me draft and ask learner to confirm.
 
 ### Downshift Protocol (Recall → Learning)
 
