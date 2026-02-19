@@ -1,6 +1,6 @@
 ---
 name: leetcode-teacher
-description: This skill should be used when the user asks to learn, practice, or be tested on coding interview problems (LeetCode, NeetCode, DSA), ML implementations, or data structures and algorithms. Common triggers include "teach me", "explain this problem", "walk me through", "help me understand", "how to solve", "coding interview", "implement [algorithm/optimizer/layer]", or providing a leetcode.com or neetcode.io URL. It also handles recall testing and mock interview modes when the user says "quiz me", "test my recall", "mock interview", or "drill me on". It acts as a Socratic teacher that guides through structured problem breakdowns with progressive hints rather than direct answers. References cover numerical search (bisection, ternary search, Newton's method, simulated annealing), numerical integration (Simpson's rule, trapezoidal rule), and all standard DSA topics.
+description: This skill should be used when the user asks to learn, practice, or be tested on coding interview problems (LeetCode, NeetCode, DSA), ML implementations, or data structures and algorithms. Common triggers include "teach me", "explain this problem", "walk me through", "help me understand", "how to solve", "coding interview", "implement [algorithm/optimizer/layer]", or providing a leetcode.com or neetcode.io URL. It also handles recall testing and mock interview modes when the user says "quiz me", "test my recall", "mock interview", or "drill me on". It acts as a Socratic teacher that guides through structured problem breakdowns with progressive hints rather than direct answers. References cover numerical search (bisection, ternary search, Newton's method, simulated annealing), numerical integration (Simpson's rule, trapezoidal rule), advanced graph algorithms (bridges, articulation points, SCC, advanced shortest paths, MST variants, LCA/RMQ, network flow, bipartite matching, 2-SAT, HLD), and all standard DSA topics.
 ---
 
 # LeetCode & ML Implementation Teacher
@@ -304,6 +304,14 @@ When the optimal solution uses a specific technique, load the matching reference
 | N-Sum, LRU/LFU Cache, state machine DP, subsequence DP, Dijkstra | `advanced-patterns.md` |
 | Advanced string algorithms (hashing, suffix array/automaton, Aho-Corasick, Manacher, Lyndon) | `string-algorithms-advanced.md` |
 | Linear algebra (Gaussian elimination, determinants, rank, LU decomposition) | `linear-algebra-gauss.md` |
+| BFS/DFS details, bridges, articulation points, SCC, strong orientation | `graph-traversal-advanced.md` |
+| Dijkstra variants, Bellman-Ford, 0-1 BFS, Floyd-Warshall, APSP | `graph-shortest-paths-advanced.md` |
+| MST variants, Kirchhoff theorem, Prüfer code | `graph-mst-trees.md` |
+| Cycle finding, negative cycles, Eulerian path/circuit | `graph-cycles-euler.md` |
+| LCA (binary lifting, Tarjan, Farach-Colton-Bender), RMQ | `graph-lca-rmq.md` |
+| Max flow (Dinic, Edmonds-Karp, push-relabel), min-cost flow | `graph-network-flow.md` |
+| Bipartite check, maximum matching (Kuhn), assignment (Hungarian) | `graph-bipartite-matching.md` |
+| Topological sort (detailed), 2-SAT, HLD, edge/vertex connectivity | `graph-special-topics.md` |
 
 When sorting is part of the optimal solution, also ask: *"Which sort would you use and why? What properties matter — stability, in-place, worst-case guarantee?"*
 
