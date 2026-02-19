@@ -33,6 +33,14 @@ if [ "${REFS_READ:-0}" -eq 0 ]; then
   exit 0
 fi
 
+# Teaching requires multi-turn Socratic Q&A before reaching Step 8B/R7B.
+# A session with fewer than 3 user messages hasn't progressed far enough.
+USER_TURNS=$(grep -c '"type"\s*:\s*"user"' "$TRANSCRIPT" 2>/dev/null)
+USER_TURNS=${USER_TURNS:-0}
+if [ "$USER_TURNS" -lt 3 ]; then
+  exit 0
+fi
+
 # Check both files were actually written (not just read/mentioned)
 # Two-stage pipe: filter to write operations, then check for target file
 PROFILE_WRITTEN=$(grep -E '"name"\s*:\s*"(Write|Edit|MultiEdit)"' "$TRANSCRIPT" 2>/dev/null | grep -c 'leetcode-teacher-profile' 2>/dev/null)
