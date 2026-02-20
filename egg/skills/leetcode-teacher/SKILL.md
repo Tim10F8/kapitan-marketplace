@@ -369,7 +369,7 @@ Generate saveable Markdown study notes. Full templates in `references/output-for
 
 **Recall Mode** — required sections: metadata header (including Verdict: Strong Pass / Pass / Borderline / Needs Work), Reconstruction (approach + code quality + corrections), Edge Cases (table), Complexity Analysis (table), Pattern Classification, Variation Response, Gaps to Review, Recommended Review Schedule, Reflection Questions. Include Mode Transitions section only if downshift/upshift occurred. Include Reference Solution only for Borderline/Needs Work verdicts or on request.
 
-**Filenames:** Learning: `[problem-name].md` — Recall: `[problem-name]-recall-[YYYY-MM-DD].md`
+**Filenames:** All sessions live in one file per problem: `[problem-name].md`. Recall sessions append a `## Recall — [YYYY-MM-DD]` section to the existing file (create the file if it doesn't exist yet).
 
 ---
 

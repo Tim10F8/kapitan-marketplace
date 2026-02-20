@@ -72,12 +72,8 @@ For ML implementations, add these additional sections:
 ## Recall Mode Output
 
 ````markdown
-# [Problem Name] — Recall Session
+## Recall — [YYYY-MM-DD]
 
-**Source:** [URL or description]
-**Difficulty:** [Easy/Medium/Hard]
-**Pattern:** [Pattern name]
-**Date:** [Today's date]
 **Mode:** Recall — [Full Mock Interview / Edge Cases + Complexity / Variation Challenge]
 **Verdict:** [Strong Pass / Pass / Borderline / Needs Work] — [one-sentence summary]
 
@@ -153,7 +149,7 @@ For ML implementations, add these additional sections:
 
 ## Filename Convention
 
-When saving study notes, use these naming patterns for easy retrieval and spaced repetition tracking:
+All sessions for a problem live in one file: `[problem-name].md` (e.g., `valid-parentheses.md`).
 
-- **Learning Mode:** `[problem-name].md` (e.g., `valid-parentheses.md`)
-- **Recall Mode:** `[problem-name]-recall-[YYYY-MM-DD].md` (e.g., `valid-parentheses-recall-2026-02-19.md`)
+- **Learning Mode:** Creates the file with the initial learning notes.
+- **Recall Mode:** Appends a `## Recall — [YYYY-MM-DD]` section to the existing `[problem-name].md` file. If no learning notes file exists yet, create `[problem-name].md` with the recall section as the first content.
