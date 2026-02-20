@@ -307,9 +307,15 @@ For structured post-problem reflection and the problem-solving thinking checklis
 
 Produce structured Markdown study notes (see Output Format below). Offer to save to a file.
 
-### Step 8B: Update Learner Profile
+### Step 8B: Update Ledger & Learner Profile
 
-After generating study notes, update the persistent learner profile per `references/learner-profile-spec.md` Section "Update Protocol — Learning Mode". Write ledger first (source of truth), then profile. Use Session Timestamp from `=== SESSION METADATA ===` context (see spec for fallback chain). On first session, show About Me draft and ask learner to confirm.
+After generating study notes, perform BOTH writes in order. Consult `references/learner-profile-spec.md` Section "Update Protocol — Learning Mode" for full details.
+
+**Write 1 — Ledger (mandatory, do this first).** Append one row to `~/.claude/leetcode-teacher-ledger.md`. If the file does not exist, create it with the header row first. Columns: `Timestamp | Session ID | Problem | Pattern | Mode | Verdict | Gaps | Review Due`. This is the source of truth.
+
+**Write 2 — Profile.** Append to Session History (newest first, 20-entry cap) and update Known Weaknesses in `~/.claude/leetcode-teacher-profile.md`. Verdict and gap tags must match the ledger row exactly.
+
+Use Session Timestamp from `=== SESSION METADATA ===` context (see spec for fallback chain). On first session, show About Me draft and ask learner to confirm.
 
 ---
 
@@ -319,7 +325,7 @@ Full protocol in `references/recall-workflow.md`. Load it when Recall Mode is tr
 
 **Core contract:** Interviewer, not teacher. Neutral acknowledgments only ("Okay", "Got it"). No hints, no praise, no correction — probe. Use `references/recall-drills.md` for question banks.
 
-**Steps:** R1 (Problem Framing) → R2 (Unprompted Reconstruction) → R3 (Edge Case Drill — calibrate from Known Weaknesses) → R4 (Complexity Challenge) → R5 (Pattern Classification) → R6 (Variation Adaptation) → R7 (Debrief & Scoring) → R7B (Update Learner Profile per `references/learner-profile-spec.md`)
+**Steps:** R1 (Problem Framing) → R2 (Unprompted Reconstruction) → R3 (Edge Case Drill — calibrate from Known Weaknesses) → R4 (Complexity Challenge) → R5 (Pattern Classification) → R6 (Variation Adaptation) → R7 (Debrief & Scoring) → R7B (Update Ledger & Learner Profile per `references/learner-profile-spec.md`)
 
 **Scoring (R7):** Strong Pass / Pass / Borderline / Needs Work. Review schedule: all correct → 7 days; minor gaps → 3 days; major gaps → tomorrow + 3 days.
 

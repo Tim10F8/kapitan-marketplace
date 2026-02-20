@@ -89,9 +89,15 @@ Structure the debrief as:
 
 Generate structured Recall Mode output (see `output-formats.md`).
 
-## R7B: Update Learner Profile
+## R7B: Update Ledger & Learner Profile
 
-After the R7 debrief, update the persistent learner profile per `learner-profile-spec.md` Section "Update Protocol — Recall Mode". Write ledger first, then profile. Review interval is calculated from R7 verdict (see spec for formula). On first session, show About Me draft and ask learner to confirm.
+After the R7 debrief, perform BOTH writes in order. Consult `learner-profile-spec.md` Section "Update Protocol — Recall Mode" for full details.
+
+**Write 1 — Ledger (mandatory, do this first).** Append one row to `~/.claude/leetcode-teacher-ledger.md`. If the file does not exist, create it with the header row first. Columns: `Timestamp | Session ID | Problem | Pattern | Mode | Verdict | Gaps | Review Due`. Review interval from R7 verdict: Strong Pass = previous interval x2 (min 7d), Pass = previous interval x1.5 (min 5d), Borderline = 2d, Needs Work = 1d.
+
+**Write 2 — Profile.** Append to Session History (newest first, 20-entry cap) and update Known Weaknesses in `~/.claude/leetcode-teacher-profile.md`. Verdict and gap tags must match the ledger row exactly.
+
+On first session, show About Me draft and ask learner to confirm.
 
 ---
 
